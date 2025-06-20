@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio|Sahil</title>
+  <link rel="icon" href="OIP.jpg" type="image/x-icon">
+  <style>
+    :root {
+      --bg: #fdfdfd;
+      --text: #1a1a1a;
+      --accent: #007acc;
+    }
+
+    [data-theme="dark"] {
+      --bg: #121212;
+      --text: #e0e0e0;
+      --accent: #00bcd4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--accent);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 1rem;
+      background-color: var(--bg);
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 3rem 1.5rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .project, .skill {
+      background: rgba(0, 0, 0, 0.05);
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .project-image {
+  width: 100%;
+  max-width: 400px; /* restricts max size */
+  height: auto;      /* keeps aspect ratio */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+}
+
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--accent);
+      color: white;
+    }
+
+    #dark-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: var(--accent);
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <button id="dark-toggle">Toggle Theme</button>
+  <header>
+    <h1>Sahil Kumar Patra</h1>
+    <p>B.Tech in Metallurgical and Materials Engineering, NIT Rourkela</p>
+  </header>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>I am a second-year undergraduate student at NIT Rourkela pursuing Metallurgical and Materials Engineering. My core interests lie at the intersection of materials innovation, sustainability, and emerging technologies like AI-driven simulations.</p>
+    <p>I am actively looking for opportunities to collaborate on research projects, internships, or learning environments that challenge my thinking and help me grow. If you're working on something meaningful in materials science, sustainability, or interdisciplinary innovation—let connect!</p>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project">
+      <h3>ESP32 Robotic Arm Interface (Ongoing) </h3>
+      <p>Controlled robotic arm using ESP32 with camera input and Wi-Fi web server. Applied knowledge of electronics and embedded systems.</p>
+      <p>This Project is being done in Collaboration with Somya Ranjan Suar and Aiyush Anand.</p>
+    </div>
+    <div class="project">
+      <h3>Path Following Robot</h3>
+      <img src="Robot.jpeg" alt="Path Following Robot" class="project-image">
+      <p>Designed and implemented a line-following robot capable of autonomously navigating a path using infrared sensors and feedback control logic.</p>
+      <p>This Project was done in Collaboration with Somya Ranjan Suar.</p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skill">Java</div>
+    <div class="skill">AutoCAD</div>
+    <div class="skill">Basic Electronics and Control Systems</div>
+    <div class="skill">Web and UI Design (HTML, CSS)</div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Details</h2>
+    <p>Email: patrasahil081@gmail.com</p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/sahil-kumar-patra" target="_blank">Linkedin</a></p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Anshu | Portfolio Website</p>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('dark-toggle');
+    toggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+
+</html>
