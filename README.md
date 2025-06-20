@@ -1,12 +1,15 @@
-- 👋 Hi, I’m @sahilvxky25
-- 👀 I’m interested in ...
-- 🌱 I’m currently learning ...
-- 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me ... patra1383
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
+# 🌐 Anshu's Responsive Portfolio Website
 
-<!---
-sahilvxky25/sahilvxky25 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+A clean, responsive personal portfolio website built using plain HTML and CSS. This project showcases Sahil's academic background, technical skills, and project work, tailored to a professional audience and optimized for both desktop and mobile devices.
+
+---
+
+## 📌 Features
+
+- ✅ Responsive layout for all screen sizes
+- 🌙 Light/Dark Mode toggle
+- 🎯 Clean UI with smooth scrolling
+- 🛠️ Modular sections: About, Projects, Skills, Contact
+- 💼 Ready for deployment (GitHub Pages, Netlify, etc.)
+
+---
