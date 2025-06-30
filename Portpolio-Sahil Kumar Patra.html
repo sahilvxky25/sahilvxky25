@@ -1,178 +1,830 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio|Sahil</title>
-  <link rel="icon" href="OIP.jpg" type="image/x-icon">
-  <style>
-    :root {
-      --bg: #fdfdfd;
-      --text: #1a1a1a;
-      --accent: #007acc;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio|Sahil</title>
+    <link rel="icon" href="OIP.jpg" type="image/x-icon">
+    <style>
+        /* CSS - The Styling */
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --card-background: #ffffff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition-speed: 0.3s;
+            --border-color: #e0e0e0;
+            --input-background: #ffffff;
+            --input-border: #ccc;
+        }
 
-    [data-theme="dark"] {
-      --bg: #121212;
-      --text: #e0e0e0;
-      --accent: #00bcd4;
-    }
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --primary-color: #4dabf7;
+            --secondary-color: #adb5bd;
+            --background-color: #121212;
+            --text-color: #e9ecef;
+            --card-background: #1e1e1e;
+            --shadow: 0 4px 8px rgba(0,0,0,0.3);
+            --border-color: #333;
+            --input-background: #2d2d2d;
+            --input-border: #555;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 20px;
+        }
 
-    header {
-      background: var(--accent);
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
+        /* Header & Navigation */
+        header {
+            background: var(--card-background);
+            color: var(--text-color);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: background var(--transition-speed) ease-in-out;
+        }
 
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      padding: 1rem;
-      background-color: var(--bg);
-    }
+        header.scrolled {
+            background: var(--card-background);
+            backdrop-filter: blur(5px);
+        }
 
-    nav a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: bold;
-    }
+        [data-theme="dark"] header.scrolled {
+            background: rgba(30, 30, 30, 0.95);
+        }
 
-    section {
-      padding: 3rem 1.5rem;
-      max-width: 1000px;
-      margin: auto;
-    }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    h2 {
-      margin-bottom: 1rem;
-      color: var(--accent);
-    }
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
 
-    .project, .skill {
-      background: rgba(0, 0, 0, 0.05);
-      margin-bottom: 1rem;
-      padding: 1rem;
-      border-radius: 8px;
-    }
-    .project-image {
-  width: 100%;
-  max-width: 400px; /* restricts max size */
-  height: auto;      /* keeps aspect ratio */
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 1rem;
-}
+        header nav ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: flex;
+        }
 
+        header nav ul li {
+            margin-left: 25px;
+        }
 
-    footer {
-      text-align: center;
-      padding: 2rem;
-      background: var(--accent);
-      color: white;
-    }
+        header nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color var(--transition-speed);
+        }
 
-    #dark-toggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: var(--accent);
-      border: none;
-      color: white;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-    }
+        header nav ul li a:hover,
+        header nav ul li a.active {
+            color: var(--primary-color);
+        }
 
-    @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-      }
-    }
-  </style>
+        #dark-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            cursor: pointer;
+            border-radius: 25px;
+            z-index: 1001;
+            font-weight: 600;
+            transition: all var(--transition-speed);
+            box-shadow: var(--shadow);
+        }
+
+        #dark-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Hero Section */
+        #hero {
+            padding-top: 120px;
+            padding-bottom: 80px;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%);
+            color: white;
+        }
+
+        [data-theme="dark"] #hero {
+            background: linear-gradient(135deg, #1a5490 0%, #0d3868 100%);
+        }
+
+        #hero .hero-content {
+            max-width: 700px;
+        }
+
+        #hero h2 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        #hero .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: rgba(255,255,255,0.9);
+            animation: fadeInUp 1s ease-out 0.5s;
+            animation-fill-mode: backwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: var(--primary-color);
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* General Section Styling */
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: border-color var(--transition-speed);
+        }
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        section h2.section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        section h2.section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        /* About Me Section */
+        #about .about-content {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        #about .about-text {
+            flex: 2;
+        }
+
+        #about .about-image-container {
+            flex: 1;
+            text-align: center;
+        }
+
+        #about .about-image-container img {
+            max-width: 250px;
+            border-radius: 50%;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition-speed) ease-in-out;
+        }
+         #about .about-image-container img:hover {
+            transform: scale(1.05);
+         }
+
+        /* Skills Section */
+        #skills .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .skill-item {
+            background: var(--card-background);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color var(--transition-speed);
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .skill-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        /*Education Item */
+        #education .education{
+            background: rgba(0, 0, 0, 0.05);
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        [data-theme="dark"] #education .education {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .education-item:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .education-item i{
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        /* Projects Section */
+        #projects .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--card-background);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color var(--transition-speed);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.18);
+        }
+
+        .project-card img.project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+        }
+
+        .project-card .project-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .project-card p {
+            flex-grow: 1;
+            margin-bottom: 15px;
+        }
+
+        .project-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .project-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact Section */
+        #contact form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-background);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transition: background-color var(--transition-speed);
+        }
+
+        #contact .form-group {
+            margin-bottom: 20px;
+        }
+
+        #contact label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        #contact input[type="text"],
+        #contact input[type="email"],
+        #contact textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid var(--input-border);
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: var(--input-background);
+            color: var(--text-color);
+            transition: border-color var(--transition-speed), background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        #contact input[type="text"]:focus,
+        #contact input[type="email"]:focus,
+        #contact textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        #contact textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        #contact button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+
+        #contact button[type="submit"]:hover {
+            background: #0056b3;
+        }
+
+        [data-theme="dark"] #contact button[type="submit"]:hover {
+            background: #66b3ff;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background: var(--card-background);
+            color: var(--text-color);
+            margin-top: 40px;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+        footer p {
+            margin: 0;
+        }
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+            }
+            header h1 {
+                margin-bottom: 10px;
+            }
+            header nav ul {
+                justify-content: center;
+                width: 100%;
+            }
+            header nav ul li {
+                margin: 0 10px;
+            }
+
+            #hero h2 {
+                font-size: 2.2rem;
+            }
+            #hero .tagline {
+                font-size: 1.2rem;
+            }
+
+            #about .about-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            #about .about-image-container {
+                margin-bottom: 20px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            #dark-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <button id="dark-toggle">Toggle Theme</button>
-  <header>
-    <h1>Sahil Kumar Patra</h1>
-    <p>B.Tech in Metallurgical and Materials Engineering, NIT Rourkela</p>
-  </header>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
-  </nav>
+    <button id="dark-toggle">🌙 Dark</button>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>I am a second-year undergraduate student at NIT Rourkela pursuing Metallurgical and Materials Engineering. My core interests lie at the intersection of materials innovation, sustainability, and emerging technologies like AI-driven simulations.</p>
-    <p>I am actively looking for opportunities to collaborate on research projects, internships, or learning environments that challenge my thinking and help me grow. If you're working on something meaningful in materials science, sustainability, or interdisciplinary innovation—let connect!</p>
-    <p>Thanks for stopping by my portfolio!</p>
-  </section>
+    <header id="main-header">
+        <div class="container">
+            <h1>Sahil Kumar Patra</h1>
+            <nav>
+                <ul>
+                    <li><a href="#hero" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#learning">Learning</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="project">
-      <h3>ESP32 Robotic Arm Interface (Ongoing) </h3>
-      <p>Controlled robotic arm using ESP32 with camera input and Wi-Fi web server. Applied knowledge of electronics and embedded systems.</p>
-      <p>This Project is being done in Collaboration with Somya Ranjan Suar and Aiyush Anand.</p>
-    </div>
-    <div class="project">
-      <h3>Path Following Robot</h3>
-      <img src="Robot.jpeg" alt="Path Following Robot" class="project-image">
-      <p>Designed and implemented a line-following robot capable of autonomously navigating a path using infrared sensors and feedback control logic.</p>
-      <p>This Project was done in Collaboration with Somya Ranjan Suar.</p>
-    </div>
-  </section>
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Innovator. Developer. Creative Thinker.</h2>
+                <p class="tagline" id="tagline">Materials Engineering at NIT Rourkela | Curious Mind | Future Technologist | Exploring Sustainability + Systems Thinking</p>
+                <a href="#projects" class="cta-button">View My Work</a>
+            </div>
+        </div>
+    </section>
 
-  <section id="skills">
-    <h2>Skills</h2>
-    <div class="skill">Java</div>
-    <div class="skill">AutoCAD</div>
-    <div class="skill">Basic Electronics and Control Systems</div>
-    <div class="skill">Web and UI Design (HTML, CSS)</div>
-  </section>
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-image-container">
+                    <img src="self.jpg" alt="Sahil Kumar Patra - Profile Picture">
+                </div>
+                <div class="about-text">
+                    <p>I am a second-year undergraduate student at NIT Rourkela pursuing Metallurgical and Materials Engineering. My core interests lie at the intersection of materials innovation, sustainability, and emerging technologies like AI-driven simulations.</p>
+                    <p>I am actively looking for opportunities to collaborate on research projects, internships, or learning environments that challenge my thinking and help me grow. If you're working on something meaningful in materials science, sustainability, or interdisciplinary innovation—let us connect!</p>
+                    <p>Thanks for stopping by my portfolio!</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="contact">
-    <h2>Contact Details</h2>
-    <p>Email: patrasahil081@gmail.com</p>
-    <p>LinkedIn: <a href="https://www.linkedin.com/in/sahil-kumar-patra" target="_blank">Linkedin</a></p>
-  </section>
+    <section id="education">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            <p style="text-align:center; margin-bottom: 30px;">My Educational BackGround</p>
+            <div class="skill-grid">
+                <div class="skill-item">
+                    <h3>B.Tech in Metallurgical and Materials Engineering</h3>
+                    <p>National Institute of Technology, Rourkela</p>
+                    <p>Aug 2024 - Jun 2028</p>
+                    <p>Relevant Coursework: Materials Science, Metallurgy, Electronics, Control Systems</p>
+                </div>
+                <div class="skill-item">
+                    <h3>Class 12th (CHSE) </h3>
+                    <p>Gangadhar Meher Higher Secondary School, Sambalpur, Odisha</p>
+                    <p>Completed in 2024</p>
+                    <p>Specialization: Science(PCM)</p>
+                </div>
+                <div class="skill-item">
+                    <h3>Class 10th (CBSE) </h3>
+                    <p>Vikash, Bargarh, Odisha</p>
+                    <p>Completed in 2022</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <footer>
-    <p>&copy; 2025 Anshu | Portfolio Website</p>
-  </footer>
+    <section id="courses">
+        <div class="container">
+            <h2 class="section-title">Courses</h2>
+            <p style="text-align:center; margin-bottom: 30px;">My Educational BackGround</p>
+            <div class="skill-grid">
+                <div class="skill-item">
+                    <h3>Introduction to Materials Science</h3>
+                    <p>Explored the structure–property relationships in metals, polymers, ceramics, and composites for engineering applications.</p>
+                </div>
+                <div class="skill-item">
+                    <h3>Fundamentals of Metallurgy</h3>
+                    <p>Studied physical and extractive metallurgy principles including phase diagrams, heat treatment, and solidification processes.</p>
+                </div>
+                <div class="skill-item">
+                    <h3>Basic Electronics and Circuit Design</h3>
+                    <p>Learned the fundamentals of analog/digital circuits and practiced designing and analyzing electronic systems.</p>
+                </div>
+                <div class="skill-item">
+                    <h3>C Language</h3>
+                    <p>Developed a strong foundation in procedural programming and algorithm design using C.</p>
+                </div>
+                <div class="skill-item">
+                    <h3>AutoCAD</h3>
+                    <p>Practiced 2D drafting and technical drawing for engineering design and documentation using AutoCAD tools.</p>
+                </div>
+                <div class="skill-item">
+                    <h3>Communicative English</h3>
+                    <p>Enhanced academic and professional communication skills through structured reading, writing, and speaking exercises.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <script>
-    const toggle = document.getElementById('dark-toggle');
-    toggle.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      if (currentTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'light');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
-    });
-  </script>
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Skillset</h2>
+            <p style="text-align:center; margin-bottom: 30px;">Here's a glimpse of the technologies and tools I excel in. I'm always expanding my horizons!</p>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <h3>HTML5</h3>
+                    <p>Structuring web content</p>
+                </div>
+                <div class="skill-item">
+                    <h3>CSS3</h3>
+                    <p>Styling with precision</p>
+                </div>
+                <div class="skill-item">
+                    <h3>Java</h3>
+                    <p>Programming logic and data structures</p>
+                </div>
+                <div class="skill-item">
+                    <h3>AutoCAD</h3>
+                    <p>Drafting precise engineering blueprints</p>
+                </div>
+                <div class="skill-item">
+                    <h3>Python</h3>
+                    <p>Solving scientific problems</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certification">
+        <div class="container">
+            <h2 class ="section-title">Certifications</h2>
+            <p style="text-align:center; margin-bottom: 30px;">Here's a glimpse of the Certifications I have. I'm always expanding my horizons!</p>
+            <div class="skill-grid">
+                <div class="skill-item">
+                    <h3>MatLab</h3>
+                    <p>I have Completed the Self-pace Matlab Onramp</p>
+                    <p>These helps me in using MatLab in Compulational Analysis</p>
+                    <div class="project-links">
+                        <a href="https://matlabacademy.mathworks.com/progress/share/certificate.html?id=6685bedd-6634-40a7-a148-355f8737f9f5&" target="_blank">View my certification</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <p style="text-align:center; margin-bottom: 30px;">A selection of projects that showcase my ability to innovate and deliver.</p>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="robotic-arm.jpg" alt="Robotic Arm" class="project-image">
+                    <div class="project-info">
+                        <h3>ESP-32 Robtic Arm (OnGoing)</h3>
+                        <p>Controlled robotic arm using ESP32 with camera input and Wi-Fi web server. Applied knowledge of electronics and embedded systems.</p>
+                        <p>This Project is being done in Collaboration with Somya Ranjan Suar and Aiyush Anand.</p>
+                        <div class="project-links">
+                            <a href="#" target="_blank">Learn More</a>
+                            <a href="https://github.com/sahilvxky25/robotic-arm" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="robot.jpg" alt="Path Following Robot" class="project-image">
+                    <div class="project-info">
+                        <h3>Path Following Robot</h3>
+                        <p>Designed and implemented a line-following robot capable of autonomously navigating a path using infrared sensors and feedback control logic.</p>
+                        <p>This Project was done in Collaboration with Somya Ranjan Suar.</p>
+                        <div class="project-links">
+                            <a href="#" target="_blank">Learn More</a>
+                            <a href="https://github.com/robotic-arm" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learning">
+        <div class="container">
+            <h2 class ="section-title">Currently Learning</h2>
+             <p style="text-align:center; margin-bottom: 30px;"></p>
+             <div class="skill-grid">
+                <div class="skill-item">
+                    <p>Deepening my understanding of physical metallurgy, control systems, and programming through structured study and project-based application.</p>
+                    <p>Exploring advanced materials characterization techniques and their applications in sustainable engineering. </p>
+                    <p>I am also preparing for Gate Metallurgy.</p>
+                </div>
+             </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p style="text-align:center; margin-bottom: 30px;">I'm always excited to discuss new projects, creative ideas, or opportunities to collaborate. Feel free to reach out!</p>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required placeholder="Your Full Name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="Your Email Address">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required placeholder="Your Message Here..."></textarea>
+                </div>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+        <div class="container">
+            <h2 class="section-title">Contact Details</h2>
+            <p style="text-align:center; margin-bottom: 30px;"> 
+                <p><big><b>Email:</b><a href="mailto:patrasahil081@gmail.com" target="_blank"> Send an Email</a></big></p>
+                <p><big><b>LinkedIn:</b> <a href="https://www.linkedin.com/in/sahil-kumar-patra" target="_blank"> Linkedin</a></big></p>
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Sahil Kumar Patra. All Rights Reserved.</p>
+            <p>Designed with a forward-thinking approach. Let's innovate together!</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript - The Interactivity
+
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('dark-toggle');
+        const body = document.body;
+
+        // Check for saved theme preference or default to 'light'
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        body.setAttribute('data-theme', currentTheme);
+
+        // Update button text based on current theme
+        function updateToggleButton() {
+            const theme = body.getAttribute('data-theme');
+            if (theme === 'dark') {
+                themeToggle.innerHTML = '☀️ Light';
+            } else {
+                themeToggle.innerHTML = '🌙 Dark';
+            }
+        }
+
+        // Initialize button text
+        updateToggleButton();
+
+        // Theme toggle event listener
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateToggleButton();
+        });
+
+        // Dynamic year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Smooth scrolling for navigation links & active link highlighting
+        const navLinks = document.querySelectorAll('header nav ul li a');
+        const sections = document.querySelectorAll('section');
+        const header = document.getElementById('main-header');
+
+        window.addEventListener('scroll', () => {
+            // Header style on scroll
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            // Active link highlighting
+            let currentSectionId = 'hero';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - header.offsetHeight - 50;
+                if (window.scrollY >= sectionTop) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Optional: Simple "typing" effect for the tagline
+        const tagline = document.getElementById('tagline');
+        if (tagline) {
+            const originalText = tagline.textContent;
+            tagline.textContent = '';
+            let i = 0;
+            function typeWriter() {
+                if (i < originalText.length) {
+                    tagline.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+            setTimeout(typeWriter, 1500);
+        }
+
+        // Contact Form Submission
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+
+                if(name && email && message) {
+                    console.log('Form Submitted:');
+                    console.log('Name:', name);
+                    console.log('Email:', email);
+                    console.log('Message:', message);
+                    alert('Thank you for your message! (This is a demo - data logged to console)');
+                    contactForm.reset();
+                } else {
+                    alert('Please fill in all fields.');
+                }
+            });
+        }
+    </script>
 </body>
-
 </html>
