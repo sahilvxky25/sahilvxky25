@@ -1,15 +1,13 @@
-# 🌐 Anshu's Responsive Portfolio Website
+# Hi there 👋 I'm Sahil Patra
 
 A clean, responsive personal portfolio website built using plain HTML and CSS. This project showcases Sahil's academic background, technical skills, and project work, tailored to a professional audience and optimized for both desktop and mobile devices.
 
 ---
 
-## 📌 Features
+## 👨‍💻 About Me
 
-- ✅ Responsive layout for all screen sizes
-- 🌙 Light/Dark Mode toggle
-- 🎯 Clean UI with smooth scrolling
-- 🛠️ Modular sections: About, Projects, Skills, Contact
-- 💼 Ready for deployment (GitHub Pages, Netlify, etc.)
+- 🎓 Undergraduate at NIT Rourkela (Metallurgical and Materials Engineering), actively transitioning into Control System & Robtics
+- 🌱 Currently focused on Drones and Self Balancing Bots
 
 ---
+
