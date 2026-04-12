@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>ESP32 Bot</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@400;500;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Exo 2',sans-serif;}
+  .wrap{padding:1.5rem 1rem;max-width:480px;margin:0 auto;}
+
+  /* ── Header ── */
+  .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+  .header h2{font-size:13px;font-weight:500;color:var(--color-text-secondary);letter-spacing:0.08em;text-transform:uppercase;}
+  .ap-badge{font-family:'Share Tech Mono',monospace;font-size:11px;padding:4px 10px;border-radius:20px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);color:var(--color-text-secondary);}
+  .ap-badge span{color:#1D9E75;font-weight:700;}
+
+  /* ── Status bar ── */
+  .status-bar{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--color-text-secondary);margin-bottom:1.5rem;padding:8px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);}
+  .dot{width:8px;height:8px;border-radius:50%;background:#888;flex-shrink:0;transition:background 0.3s;}
+  .dot.on{background:#1D9E75;}
+  .dot.err{background:#E24B4A;}
+
+  /* ── D-Pad ── */
+  .dpad{display:grid;grid-template-columns:repeat(3,80px);grid-template-rows:repeat(3,80px);gap:8px;justify-content:center;margin-bottom:1.5rem;}
+  .dpad-cell{display:flex;align-items:center;justify-content:center;}
+  .btn{width:80px;height:80px;border-radius:var(--border-radius-lg);background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:500;color:var(--color-text-secondary);user-select:none;transition:background 0.1s,transform 0.1s,border-color 0.1s;-webkit-tap-highlight-color:transparent;}
+  .btn:active,.btn.active{background:var(--color-background-info);border-color:var(--color-border-info);color:var(--color-text-info);transform:scale(0.95);}
+  .stop-btn{width:80px;height:80px;border-radius:50%;background:var(--color-background-danger);border:0.5px solid var(--color-border-danger);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--color-text-danger);font-size:11px;font-weight:700;user-select:none;-webkit-tap-highlight-color:transparent;transition:transform 0.1s;}
+  .stop-btn:active{transform:scale(0.95);}
+  .arrow{width:24px;height:24px;}
+
+  /* ── Metrics ── */
+  .metrics{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:1rem;}
+  .metric{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border:0.5px solid var(--color-border-tertiary);}
+  .metric-label{font-size:10px;color:var(--color-text-secondary);margin-bottom:4px;white-space:nowrap;}
+  .metric-val{font-family:'Share Tech Mono',monospace;font-size:18px;font-weight:500;color:var(--color-text-primary);}
+
+  /* ── Log ── */
+  .log{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--color-text-secondary);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 12px;height:70px;overflow-y:auto;line-height:1.6;}
+
+  /* ── Hint ── */
+  .hint{font-size:11px;color:var(--color-text-secondary);text-align:center;margin-top:10px;opacity:0.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h2>ESP32 WiFi Bot</h2>
+    <div class="ap-badge">AP&nbsp;<span>192.168.4.1</span></div>
+  </div>
+
+  <div class="status-bar">
+    <div class="dot" id="dot"></div>
+    <span id="status-txt">Connecting to bot…</span>
+  </div>
+
+  <div class="dpad">
+    <div class="dpad-cell"></div>
+    <div class="dpad-cell">
+      <button class="btn" id="btn-F"
+        onpointerdown="press('F')" onpointerup="release()">
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="12 5 12 19"/><polyline points="5 12 12 5 19 12"/>
+        </svg>FWD
+      </button>
+    </div>
+    <div class="dpad-cell"></div>
+
+    <div class="dpad-cell">
+      <button class="btn" id="btn-L"
+        onpointerdown="press('L')" onpointerup="release()">
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="19 12 5 12"/><polyline points="12 5 5 12 12 19"/>
+        </svg>LEFT
+      </button>
+    </div>
+    <div class="dpad-cell">
+      <button class="stop-btn"
+        onpointerdown="stopAll()" onpointerup="stopAll()">STOP</button>
+    </div>
+    <div class="dpad-cell">
+      <button class="btn" id="btn-R"
+        onpointerdown="press('R')" onpointerup="release()">
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="5 12 19 12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>RIGHT
+      </button>
+    </div>
+
+    <div class="dpad-cell"></div>
+    <div class="dpad-cell">
+      <button class="btn" id="btn-B"
+        onpointerdown="press('B')" onpointerup="release()">
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="12 19 12 5"/><polyline points="5 12 12 19 19 12"/>
+        </svg>REV
+      </button>
+    </div>
+    <div class="dpad-cell"></div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">Speed</div><div class="metric-val" id="m-speed">—</div></div>
+    <div class="metric"><div class="metric-label">Left PWM</div><div class="metric-val" id="m-left">—</div></div>
+    <div class="metric"><div class="metric-label">Right PWM</div><div class="metric-val" id="m-right">—</div></div>
+    <div class="metric"><div class="metric-label">Devices</div><div class="metric-val" id="m-clients">—</div></div>
+  </div>
+
+  <div class="log" id="log">Waiting for connection…</div>
+  <div class="hint">Connect your laptop to Wi-Fi: <strong>ESP32-Bot</strong> · then open this file</div>
+
+</div>
+
+<script>
+// ── Fixed AP IP — always 192.168.4.1 in ESP32 AP mode ───────────────
+const BOT_IP = "192.168.4.1";
+const BASE   = `http://${BOT_IP}`;
+
+let holdInterval = null;
+let activeBtn    = null;
+let connected    = false;
+
+// ── Logging ─────────────────────────────────────────────────────────
+function log(msg) {
+  const el = document.getElementById('log');
+  const t  = new Date().toLocaleTimeString('en', {hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  el.textContent = `[${t}] ${msg}`;
+}
+
+// ── Status indicator ────────────────────────────────────────────────
+function setStatus(state, msg) {
+  // state: 'on' | 'err' | ''
+  document.getElementById('dot').className = 'dot ' + state;
+  document.getElementById('status-txt').textContent = msg;
+  connected = (state === 'on');
+}
+
+// ── Fetch status from bot ────────────────────────────────────────────
+async function fetchStatus() {
+  try {
+    const r = await fetch(`${BASE}/status`, {signal: AbortSignal.timeout(2000)});
+    if (r.ok) {
+      const d = await r.json();
+      document.getElementById('m-speed').textContent   = d.speed      ?? 0;
+      document.getElementById('m-left').textContent    = d.leftSpeed  ?? 0;
+      document.getElementById('m-right').textContent   = d.rightSpeed ?? 0;
+      document.getElementById('m-clients').textContent = d.clients    ?? '?';
+      if (!connected) setStatus('on', `Connected · ${BOT_IP}`);
+    }
+  } catch (e) {
+    if (connected) setStatus('err', 'Lost connection — check WiFi');
+  }
+}
+
+// ── Send movement command ────────────────────────────────────────────
+async function sendCmd(cmd) {
+  try {
+    const r = await fetch(`${BASE}/move?cmd=${cmd}`, {signal: AbortSignal.timeout(2000)});
+    if (r.ok) {
+      log(`Sent: ${cmd}`);
+      fetchStatus();
+    } else {
+      log(`Error: bot returned ${r.status}`);
+    }
+  } catch (e) {
+    log(`Failed: ${e.message}`);
+    setStatus('err', 'Lost connection — check WiFi');
+  }
+}
+
+// ── Button hold logic ────────────────────────────────────────────────
+function press(cmd) {
+  if (activeBtn === cmd) return; // already moving in this direction
+  clearInterval(holdInterval);
+  if (activeBtn) document.getElementById('btn-' + activeBtn)?.classList.remove('active');
+  sendCmd(cmd);
+  activeBtn = cmd;
+  document.getElementById('btn-' + cmd)?.classList.add('active');
+  holdInterval = setInterval(() => sendCmd(cmd), 300);
+}
+
+function release() {
+  // Clears interval & visual only — bot KEEPS moving until STOP is pressed
+  clearInterval(holdInterval);
+  holdInterval = null;
+  if (activeBtn) {
+    document.getElementById('btn-' + activeBtn)?.classList.remove('active');
+    activeBtn = null;
+  }
+}
+
+function stopAll() {
+  clearInterval(holdInterval);
+  holdInterval = null;
+  if (activeBtn) {
+    document.getElementById('btn-' + activeBtn)?.classList.remove('active');
+    activeBtn = null;
+  }
+  sendCmd('S');
+}
+
+// ── Keyboard support ─────────────────────────────────────────────────
+const keyMap = {ArrowUp:'F', ArrowDown:'B', ArrowLeft:'L', ArrowRight:'R', w:'F', s:'B', a:'L', d:'R', ' ':'S'};
+document.addEventListener('keydown', e => {
+  if (e.repeat) return;
+  const cmd = keyMap[e.key];
+  if (!cmd) return;
+  e.preventDefault();
+  cmd === 'S' ? stopAll() : press(cmd);
+});
+document.addEventListener('keyup', e => {
+  // Key release does NOT stop — only Spacebar/STOP button stops
+});
+
+// ── Auto-connect on load & poll every 2 s ───────────────────────────
+setStatus('', 'Connecting to ' + BOT_IP + '…');
+fetchStatus();
+setInterval(fetchStatus, 2000);
+</script>
+</body>
+</html>
