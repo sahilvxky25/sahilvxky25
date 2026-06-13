@@ -16,7 +16,7 @@ I actively explore the integration of hardware and software by developing projec
 ## 🛠️ Tools & Technologies
 - ESP32, Arduino  
 - MATLAB, Python (Control Systems, Data Analysis)  
-- Sensor Integration (PIR, Ultrasonic, Optical, Capacitive, Strain Gauges)  
+- Sensor Integration
 - PLC & Automation Basics  
 
 ## 🚀 Vision
