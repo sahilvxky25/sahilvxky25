@@ -10,14 +10,13 @@ I actively explore the integration of hardware and software by developing projec
 - Robotics & Autonomous Systems  
 - Embedded Systems & IoT Development  
 - Control Systems Engineering (PID, Digital Control, System Modeling)  
-- Sensor Fusion & Signal Processing  
+- Sensor Fusion 
 - Applied Machine Learning in Physical Systems  
 
 ## 🛠️ Tools & Technologies
 - ESP32, Arduino  
 - MATLAB, Python (Control Systems, Data Analysis)  
 - Sensor Integration
-- PLC & Automation Basics  
 
 ## 🚀 Vision
 With a strong foundation in engineering principles and a forward-looking mindset, I aim to contribute to the development of cyber-physical systems that define the future of automation and intelligent machines.
