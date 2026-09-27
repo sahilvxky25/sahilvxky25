@@ -1,4 +1,4 @@
-# Hi there 👋 I'm Sahil Patra
+# Hi there 👋 I'm Sahil Kumar Patra
 
 ## 🤖 Engineering Intelligent Systems through Robotics & Electronics
 
@@ -9,13 +9,13 @@ I actively explore the integration of hardware and software by developing projec
 ## 🔍 Core Interests
 - Robotics & Autonomous Systems  
 - Embedded Systems & IoT Development  
-- Control Systems Engineering (PID, Digital Control, System Modeling)  
+- Control Systems Engineering (PID, LQR, MPC, SMC, Digital Control, System Modeling)  
 - Sensor Fusion 
 - Applied Machine Learning in Physical Systems  
 
 ## 🛠️ Tools & Technologies
 - ESP32, Arduino  
-- MATLAB, Python (Control Systems, Data Analysis)  
+- MATLAB, Mujoco, Python (Control Systems, Data Analysis)  
 - Sensor Integration
 
 ## 🚀 Vision
